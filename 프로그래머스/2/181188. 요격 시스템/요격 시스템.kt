@@ -1,16 +1,16 @@
 class Solution {
     fun solution(targets: Array<IntArray>): Int {
         var answer = 0
-        var end = -1
-        for(target in targets.sortedWith(compareBy({it[1]},{it.first()}))){
-            val start = target.first()
-            val last = target.last()
-            if(start<end)
-                continue
-           else{
-                end = last
-                answer+=1
-                println("start : ${start}, end : ${end}")
+        var start = 100000001
+        val targets = targets.sortedByDescending { it[1] }.toTypedArray()
+
+        for (target in targets){
+            val (ns,ne) = target
+            if(ne<=start){
+                start = ns
+                answer++
+            }else{
+                start = maxOf(start,ns)
             }
         }
         return answer
